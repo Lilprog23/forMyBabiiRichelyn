@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For You 💙</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(to top, #0f2027, #2c5364);
+    color: white;
+    overflow: hidden;
+}
+
+/* PAGE 1 */
+#page1 {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+}
+
+h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+}
+
+.buttons {
+    margin-top: 25px;
+}
+
+button {
+    padding: 12px 25px;
+    font-size: 16px;
+    border-radius: 25px;
+    border: none;
+    margin: 10px;
+    cursor: pointer;
+}
+
+#yesBtn {
+    background: #4facfe;
+    color: white;
+    box-shadow: 0 0 15px rgba(79,172,254,0.6);
+}
+
+#noBtn {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.4);
+    color: white;
+    position: absolute;
+}
+
+/* PAGE 2 */
+#page2 {
+    display: none;
+    padding: 20px;
+    height: 100vh;
+    overflow-y: auto;
+    text-align: center;
+}
+
+/* LOVE LETTER */
+.letter {
+    max-width: 500px;
+    margin: auto;
+    margin-bottom: 25px;
+    font-size: 16px;
+    line-height: 1.6;
+    border: 1px solid rgba(255,255,255,0.2);
+    padding: 20px;
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+}
+
+/* GALLERY */
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.gallery img {
+    width: 100%;
+    border-radius: 15px;
+}
+
+/* Floating Hearts */
+.heart {
+    position: fixed;
+    bottom: -10px;
+    color: #87cefa;
+    animation: floatUp 6s linear infinite;
+}
+
+@keyframes floatUp {
+    0% { transform: translateY(0); opacity: 0.7; }
+    100% { transform: translateY(-100vh); opacity: 0; }
+}
+
+/* Responsive */
+@media (min-width: 768px) {
+    .gallery {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    h1 {
+        font-size: 48px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- QUESTION PAGE -->
+<div id="page1">
+    <h1>Do you love me? 💙</h1>
+    <div class="buttons">
+        <button id="yesBtn">Yes 💖</button>
+        <button id="noBtn">No 💔</button>
+    </div>
+</div>
+
+<!-- MEMORIES PAGE -->
+<div id="page2">
+    <h1>Our Memories 💙</h1>
+
+    <!-- LOVE LETTER -->
+    <div class="letter" id="letterText"></div>
+
+    <!-- GALLERY -->
+    <div class="gallery">
+        <img src="1.jpg">
+        <img src="2.jpg">
+        <img src="3.jpg">
+        <img src="4.jpg">
+    </div>
+</div>
+
+<script>
+// YES BUTTON → show memories + start typing letter
+document.getElementById("yesBtn").addEventListener("click", () => {
+    document.getElementById("page1").style.display = "none";
+    document.getElementById("page2").style.display = "block";
+    document.body.style.overflow = "auto";
+    typeWriter();
+});
+
+// TYPEWRITER LOVE LETTER
+const text = `Hi Babiii,
+
+Before anything else… I just want you to know that you mean so much to me.
+
+Every smile, every moment, every memory we share… means everything.
+
+I’m so lucky to have you. 💙`;
+
+let i = 0;
+function typeWriter() {
+    if (i < text.length) {
+        document.getElementById("letterText").innerHTML += text.charAt(i);
+        i++;
+        setTimeout(typeWriter, 40);
+    }
+}
+
+// NO BUTTON ESCAPE (works on phone too)
+const noBtn = document.getElementById("noBtn");
+
+noBtn.addEventListener("touchstart", moveNo);
+noBtn.addEventListener("mouseover", moveNo);
+
+function moveNo() {
+    const x = Math.random() * (window.innerWidth - 100);
+    const y = Math.random() * (window.innerHeight - 50);
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
+}
+
+// FLOATING HEARTS
+function createHeart() {
+    const heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML = "💙";
+
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = (Math.random() * 20 + 10) + "px";
+
+    document.body.appendChild(heart);
+
+    setTimeout(() => heart.remove(), 6000);
+}
+
+setInterval(createHeart, 400);
+</script>
+
+</body>
+</html>
